@@ -19,6 +19,7 @@ test('Lambda has greeting environment variable', () => {
   const app = new cdk.App({
     context: {
       greeting: 'Hello from test',
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     },
   });
 

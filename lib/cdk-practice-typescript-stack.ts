@@ -17,6 +17,15 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
+    const greeting =
+      props?.greeting ??
+      this.node.tryGetContext('greeting') ??
+      'Hello, CDK with TypeScript!';
+    const removalPolicy =
+      props?.removalPolicy ??
+      this.node.tryGetContext('removalPolicy') ??
+      cdk.RemovalPolicy.DESTROY;
+
     const accessLogsBucket = new s3.Bucket(this, 'AccessLogsBucket', {
       enforceSSL: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -40,8 +49,8 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
     ]);
 
     const service = new HelloService(this, 'HelloService', {
-      greeting: props?.greeting ?? 'Hello, CDK with TypeScript!',
-      removalPolicy: props?.removalPolicy ?? cdk.RemovalPolicy.DESTROY,
+      greeting,
+      removalPolicy,
     });
 
     new cdk.CfnOutput(this, 'ApiUrl', {
