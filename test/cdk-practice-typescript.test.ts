@@ -1,17 +1,35 @@
-// import * as cdk from 'aws-cdk-lib/core';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as CdkPracticeTypescript from '../lib/cdk-practice-typescript-stack';
+import * as cdk from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
+import { CdkPracticeTypescriptStack } from '../lib/cdk-practice-typescript-stack';
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/cdk-practice-typescript-stack.ts
-// test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new CdkPracticeTypescript.CdkPracticeTypescriptStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+test('Creates DynamoDB table', () => {
+  const app = new cdk.App({
+    context: {
+      greeting: 'Hello from test',
+    },
+  });
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
-// });
+  const stack = new CdkPracticeTypescriptStack(app, 'TestStack');
+  const template = Template.fromStack(stack);
+
+  template.resourceCountIs('AWS::DynamoDB::Table', 1);
+});
+
+test('Lambda has greeting environment variable', () => {
+  const app = new cdk.App({
+    context: {
+      greeting: 'Hello from test',
+    },
+  });
+
+  const stack = new CdkPracticeTypescriptStack(app, 'TestStack');
+  const template = Template.fromStack(stack);
+
+  template.hasResourceProperties('AWS::Lambda::Function', {
+    Environment: {
+      Variables: {
+        GREETING: 'Hello from test',
+      },
+    },
+  });
+});
