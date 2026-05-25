@@ -64,13 +64,265 @@ exports[`Matches snapshot 1`] = `
     },
   },
   "Resources": {
+    "AccessLogsBucket83982689": {
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-S1",
+              "reason": "This bucket stores S3 server access logs for the demo bucket. Logging the log bucket to itself is intentionally avoided.",
+            },
+          ],
+        },
+      },
+      "Properties": {
+        "AccessControl": "LogDeliveryWrite",
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "ObjectWriter",
+            },
+          ],
+        },
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "AccessLogsBucketAutoDeleteObjectsCustomResource93F9213A": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "AccessLogsBucketPolicy7F77476F",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "AccessLogsBucket83982689",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "AccessLogsBucketPolicy7F77476F": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "AccessLogsBucket83982689",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": {
+                "AWS": "*",
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "AccessLogsBucket83982689",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "AccessLogsBucket83982689",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:PutBucketPolicy",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "AccessLogsBucket83982689",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "AccessLogsBucket83982689",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+      "DependsOn": [
+        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
+        },
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Lambda function for auto-deleting objects in ",
+              {
+                "Ref": "AccessLogsBucket83982689",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs22.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "HelloServiceHelloApi738C57B6": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Name": "HelloApi",
       },
       "Type": "AWS::ApiGateway::RestApi",
     },
     "HelloServiceHelloApiANYApiPermissionTestStackHelloServiceHelloApi02DE76ECANYABD9647D": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -112,6 +364,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::Lambda::Permission",
     },
     "HelloServiceHelloApiANYApiPermissionTestTestStackHelloServiceHelloApi02DE76ECANY6BB0A761": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -149,6 +430,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::Lambda::Permission",
     },
     "HelloServiceHelloApiANYC69F1FCE": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "AuthorizationType": "NONE",
         "HttpMethod": "ANY",
@@ -191,11 +501,48 @@ exports[`Matches snapshot 1`] = `
       },
       "Type": "AWS::ApiGateway::Method",
     },
+    "HelloServiceHelloApiAccessLogsB4001260": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RetentionInDays": 7,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "HelloServiceHelloApiAccount294BB15C": {
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "Delete",
       "DependsOn": [
         "HelloServiceHelloApi738C57B6",
       ],
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "CloudWatchRoleArn": {
           "Fn::GetAtt": [
@@ -205,10 +552,39 @@ exports[`Matches snapshot 1`] = `
         },
       },
       "Type": "AWS::ApiGateway::Account",
-      "UpdateReplacePolicy": "Retain",
+      "UpdateReplacePolicy": "Delete",
     },
     "HelloServiceHelloApiCloudWatchRole1558F347": {
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -238,9 +614,9 @@ exports[`Matches snapshot 1`] = `
         ],
       },
       "Type": "AWS::IAM::Role",
-      "UpdateReplacePolicy": "Retain",
+      "UpdateReplacePolicy": "Delete",
     },
-    "HelloServiceHelloApiDeployment7D66E1AE0314f499710f3739b3378db2b50b8338": {
+    "HelloServiceHelloApiDeployment7D66E1AE105a3974ce44ebfe068e91a845c13d40": {
       "DependsOn": [
         "HelloServiceHelloApiproxyANY4BB6F1A5",
         "HelloServiceHelloApiproxy0DE64C09",
@@ -248,6 +624,33 @@ exports[`Matches snapshot 1`] = `
       ],
       "Metadata": {
         "aws:cdk:do-not-refactor": true,
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
       },
       "Properties": {
         "Description": "Automatically created by the RestApi construct",
@@ -261,10 +664,57 @@ exports[`Matches snapshot 1`] = `
       "DependsOn": [
         "HelloServiceHelloApiAccount294BB15C",
       ],
-      "Properties": {
-        "DeploymentId": {
-          "Ref": "HelloServiceHelloApiDeployment7D66E1AE0314f499710f3739b3378db2b50b8338",
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
         },
+      },
+      "Properties": {
+        "AccessLogSetting": {
+          "DestinationArn": {
+            "Fn::GetAtt": [
+              "HelloServiceHelloApiAccessLogsB4001260",
+              "Arn",
+            ],
+          },
+          "Format": "{"requestId":"$context.requestId","ip":"$context.identity.sourceIp","user":"$context.identity.user","caller":"$context.identity.caller","requestTime":"$context.requestTime","httpMethod":"$context.httpMethod","resourcePath":"$context.resourcePath","status":"$context.status","protocol":"$context.protocol","responseLength":"$context.responseLength"}",
+        },
+        "DeploymentId": {
+          "Ref": "HelloServiceHelloApiDeployment7D66E1AE105a3974ce44ebfe068e91a845c13d40",
+        },
+        "MethodSettings": [
+          {
+            "DataTraceEnabled": false,
+            "HttpMethod": "*",
+            "LoggingLevel": "INFO",
+            "MetricsEnabled": true,
+            "ResourcePath": "/*",
+          },
+        ],
         "RestApiId": {
           "Ref": "HelloServiceHelloApi738C57B6",
         },
@@ -273,6 +723,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::ApiGateway::Stage",
     },
     "HelloServiceHelloApiproxy0DE64C09": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "ParentId": {
           "Fn::GetAtt": [
@@ -288,6 +767,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::ApiGateway::Resource",
     },
     "HelloServiceHelloApiproxyANY4BB6F1A5": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "AuthorizationType": "NONE",
         "HttpMethod": "ANY",
@@ -328,6 +836,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::ApiGateway::Method",
     },
     "HelloServiceHelloApiproxyANYApiPermissionTestStackHelloServiceHelloApi02DE76ECANYproxy5103465D": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -369,6 +906,35 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::Lambda::Permission",
     },
     "HelloServiceHelloApiproxyANYApiPermissionTestTestStackHelloServiceHelloApi02DE76ECANYproxy3D867623": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "id": "AwsSolutions-APIG2",
+              "reason": "This demo API has no request body or query contract yet; validation will be added when explicit inputs are introduced.",
+            },
+            {
+              "id": "AwsSolutions-APIG3",
+              "reason": "This learning stack intentionally omits WAF to keep the demo inexpensive and focused on CDK fundamentals.",
+            },
+            {
+              "id": "AwsSolutions-APIG4",
+              "reason": "This learning endpoint is intentionally public while practicing API Gateway and Lambda integration.",
+            },
+            {
+              "id": "AwsSolutions-COG4",
+              "reason": "This learning endpoint is intentionally public and does not use Cognito authentication.",
+            },
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "API Gateway access logging uses the CDK-created CloudWatch role with the AWS managed logging policy.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -410,12 +976,29 @@ exports[`Matches snapshot 1`] = `
         "HelloServiceHelloFunctionServiceRoleDefaultPolicy20199EA4",
         "HelloServiceHelloFunctionServiceRoleFE6E87B4",
       ],
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "This learning Lambda uses the CDK default AWSLambdaBasicExecutionRole managed policy for CloudWatch Logs.",
+            },
+            {
+              "id": "AwsSolutions-L1",
+              "reason": "The function uses CDK Runtime.NODEJS_LATEST; this rule still flags the synthesized runtime in this CDK version.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "7093c92654444dd3905ecea2a21ca514abe83084919fd8f3bd95b0ab2c467f56.zip",
+          "S3Key": "567f7aa1309c0e72195000b23b7b768852a2f7ff9119994fe7f405ad3bc0e28c.zip",
         },
         "Environment": {
           "Variables": {
@@ -432,11 +1015,28 @@ exports[`Matches snapshot 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs22.x",
       },
       "Type": "AWS::Lambda::Function",
     },
     "HelloServiceHelloFunctionServiceRoleDefaultPolicy20199EA4": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "This learning Lambda uses the CDK default AWSLambdaBasicExecutionRole managed policy for CloudWatch Logs.",
+            },
+            {
+              "id": "AwsSolutions-L1",
+              "reason": "The function uses CDK Runtime.NODEJS_LATEST; this rule still flags the synthesized runtime in this CDK version.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -471,6 +1071,23 @@ exports[`Matches snapshot 1`] = `
       "Type": "AWS::IAM::Policy",
     },
     "HelloServiceHelloFunctionServiceRoleFE6E87B4": {
+      "Metadata": {
+        "cdk_nag": {
+          "rules_to_suppress": [
+            {
+              "applies_to": [
+                "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+              "id": "AwsSolutions-IAM4",
+              "reason": "This learning Lambda uses the CDK default AWSLambdaBasicExecutionRole managed policy for CloudWatch Logs.",
+            },
+            {
+              "id": "AwsSolutions-L1",
+              "reason": "The function uses CDK Runtime.NODEJS_LATEST; this rule still flags the synthesized runtime in this CDK version.",
+            },
+          ],
+        },
+      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -517,19 +1134,138 @@ exports[`Matches snapshot 1`] = `
             "KeyType": "HASH",
           },
         ],
+        "PointInTimeRecoverySpecification": {
+          "PointInTimeRecoveryEnabled": true,
+        },
       },
       "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "MyFirstBucketAutoDeleteObjectsCustomResourceC52FCF6E": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "MyFirstBucketPolicy3243DEFD",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "MyFirstBucketB8884501",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
       "UpdateReplacePolicy": "Delete",
     },
     "MyFirstBucketB8884501": {
       "DeletionPolicy": "Delete",
       "Properties": {
+        "LoggingConfiguration": {
+          "DestinationBucketName": {
+            "Ref": "AccessLogsBucket83982689",
+          },
+        },
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
         "VersioningConfiguration": {
           "Status": "Enabled",
         },
       },
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
+    },
+    "MyFirstBucketPolicy3243DEFD": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "MyFirstBucketB8884501",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": {
+                "AWS": "*",
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "MyFirstBucketB8884501",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "MyFirstBucketB8884501",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:PutBucketPolicy",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "MyFirstBucketB8884501",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "MyFirstBucketB8884501",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
     },
   },
   "Rules": {

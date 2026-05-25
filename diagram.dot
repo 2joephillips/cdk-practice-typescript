@@ -40,6 +40,19 @@ digraph "Diagram" {
         style = "filled,rounded";
         fillcolor = "#e4e4e4";
       ];
+      "CdkPracticeTypescriptStack/AccessLogsBucket" [
+        label = " AccessLogsBucket";
+        fontsize = 12;
+        image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
+        imagescale = "true";
+        imagepos = "tc";
+        penwidth = 0;
+        shape = "node";
+        fixedsize = "true";
+        labelloc = "b";
+        width = 2;
+        height = 2.266;
+      ];
       "CdkPracticeTypescriptStack/MyFirstBucket" [
         label = " MyFirstBucket";
         fontsize = 12;
@@ -91,6 +104,19 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
+        "CdkPracticeTypescriptStack/HelloService/HelloApiAccessLogs" [
+          label = " HelloApiAccessLogs";
+          fontsize = 12;
+          image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
         "CdkPracticeTypescriptStack/HelloService/HelloApi" [
           label = " HelloApi";
           fontsize = 12;
@@ -107,7 +133,16 @@ digraph "Diagram" {
       }
     }
   }
+  "CdkPracticeTypescriptStack/AccessLogsBucket" -> "CdkPracticeTypescriptStack/MyFirstBucket" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptStack/MyFirstBucket" -> "CdkPracticeTypescriptStack/AccessLogsBucket" [
+    dir = "both";
+  ];
   "CdkPracticeTypescriptStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptStack/HelloService/Table" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptStack/HelloService/HelloApi" -> "CdkPracticeTypescriptStack/HelloService/HelloApiAccessLogs" [
     dir = "both";
   ];
   "CdkPracticeTypescriptStack/HelloService/HelloApi" -> "CdkPracticeTypescriptStack/HelloService/HelloFunction" [
