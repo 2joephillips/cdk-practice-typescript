@@ -12,3 +12,24 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `npx cdk deploy`  deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state
 * `npx cdk synth`   emits the synthesized CloudFormation template
+
+## Git hooks
+
+This repo includes a shared pre-push hook in `.githooks/pre-push`. The hook runs
+`npm run build` and then `npm test` before allowing a push to continue.
+
+After cloning the repo, run:
+
+```sh
+npm install
+git config core.hooksPath .githooks
+```
+
+You only need to configure `core.hooksPath` once per local clone. To confirm it is
+set correctly, run:
+
+```sh
+git config --get core.hooksPath
+```
+
+The output should be `.githooks`.
