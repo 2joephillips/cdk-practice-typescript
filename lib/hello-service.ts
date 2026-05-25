@@ -10,7 +10,7 @@ import * as path from 'path';
 
 export interface HelloServiceProps {
   greeting: string;
-  removealPolicy?: cdk.RemovalPolicy;
+  removalPolicy?: cdk.RemovalPolicy;
 }
 
 export class HelloService extends Construct {
@@ -28,7 +28,7 @@ export class HelloService extends Construct {
       pointInTimeRecoverySpecification: {
         pointInTimeRecoveryEnabled: true,
       },
-      removalPolicy: props?.removealPolicy ?? cdk.RemovalPolicy.DESTROY,
+      removalPolicy: props?.removalPolicy ?? cdk.RemovalPolicy.DESTROY,
     });
 
     const helloFunction = new NodejsFunction(this, 'HelloFunction', {

@@ -41,7 +41,7 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
 
     const service = new HelloService(this, 'HelloService', {
       greeting: props?.greeting ?? 'Hello, CDK with TypeScript!',
-      removealPolicy: props?.removalPolicy ?? cdk.RemovalPolicy.DESTROY,
+      removalPolicy: props?.removalPolicy ?? cdk.RemovalPolicy.DESTROY,
     });
 
     new cdk.CfnOutput(this, 'ApiUrl', {
