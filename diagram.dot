@@ -40,6 +40,14 @@ digraph "Diagram" {
         style = "filled,rounded";
         fillcolor = "#f3f3f3";
       ];
+      "CdkPracticeTypescriptDevMonitoringStack" [
+        label = "\nCdkPracticeTypescript";
+        fontsize = 12;
+      ];
+      "CdkPracticeTypescriptProdMonitoringStack" [
+        label = "\nCdkPracticeTypescript";
+        fontsize = 12;
+      ];
       subgraph "cluster-SubGraph.CdkPracticeTypescriptDevStack" {
         graph [
           label = "CdkPracticeTypescriptDevStack";
