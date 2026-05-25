@@ -10,6 +10,7 @@ new CdkPracticeTypescriptStack(app, 'CdkPracticeTypescriptDevStack', {
   stackName: 'cdk-practice-typescript-dev',
   description: 'Dev CDK practice stack',
   greeting: 'Hello from dev',
+  removalPolicy: cdk.RemovalPolicy.DESTROY,
   tags: {
     environment: 'dev',
   },
@@ -19,6 +20,7 @@ new CdkPracticeTypescriptStack(app, 'CdkPracticeTypescriptProdStack', {
   stackName: 'cdk-practice-typescript-prod',
   description: 'Prod CDK practice stack',
   greeting: 'Hello from prod',
+  removalPolicy: cdk.RemovalPolicy.RETAIN,
   tags: {
     environment: 'prod',
   },
