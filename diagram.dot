@@ -40,17 +40,17 @@ digraph "Diagram" {
         style = "filled,rounded";
         fillcolor = "#f3f3f3";
       ];
-      "CdkPracticeTypescriptDevMonitoringStack" [
-        label = "\nCdkPracticeTypescript";
+      "main-dev-monitoring" [
+        label = " main-dev-monitoring";
         fontsize = 12;
       ];
-      "CdkPracticeTypescriptProdMonitoringStack" [
-        label = "\nCdkPracticeTypescript";
+      "main-prod-monitoring" [
+        label = " main-prod-monitoring";
         fontsize = 12;
       ];
-      subgraph "cluster-SubGraph.CdkPracticeTypescriptDevStack" {
+      subgraph "cluster-SubGraph.main-dev-stack" {
         graph [
-          label = "CdkPracticeTypescriptDevStack";
+          label = "main-dev-stack";
           labelloc = "b";
           labeljust = "l";
           margin = 10;
@@ -60,7 +60,7 @@ digraph "Diagram" {
           style = "filled,rounded";
           fillcolor = "#e4e4e4";
         ];
-        "CdkPracticeTypescriptDevStack/AccessLogsBucket" [
+        "main-dev-stack/AccessLogsBucket" [
           label = " AccessLogsBucket";
           fontsize = 12;
           image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
@@ -73,7 +73,7 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
-        "CdkPracticeTypescriptDevStack/MyFirstBucket" [
+        "main-dev-stack/MyFirstBucket" [
           label = " MyFirstBucket";
           fontsize = 12;
           image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
@@ -98,7 +98,7 @@ digraph "Diagram" {
             style = "filled,rounded";
             fillcolor = "#d6d6d6";
           ];
-          "CdkPracticeTypescriptDevStack/HelloService/Table" [
+          "main-dev-stack/HelloService/Table" [
             label = " Table";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Database\64\Arch_Amazon-DynamoDB_64@5x.png";
@@ -111,7 +111,7 @@ digraph "Diagram" {
             width = 1.2;
             height = 1.466;
           ];
-          "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" [
+          "main-dev-stack/HelloService/HelloFunction" [
             label = " HelloFunction";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Compute\64\Arch_AWS-Lambda_64@5x.png";
@@ -124,7 +124,7 @@ digraph "Diagram" {
             width = 2;
             height = 2.266;
           ];
-          "CdkPracticeTypescriptDevStack/HelloService/HelloApiAccessLogs" [
+          "main-dev-stack/HelloService/HelloApiAccessLogs" [
             label = " HelloApiAccessLogs";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
@@ -137,7 +137,7 @@ digraph "Diagram" {
             width = 2;
             height = 2.266;
           ];
-          "CdkPracticeTypescriptDevStack/HelloService/HelloApi" [
+          "main-dev-stack/HelloService/HelloApi" [
             label = " HelloApi";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Networking-Content\64\Arch_Amazon-API-Gateway_64@5x.png";
@@ -152,9 +152,9 @@ digraph "Diagram" {
           ];
         }
       }
-      subgraph "cluster-SubGraph.CdkPracticeTypescriptProdStack" {
+      subgraph "cluster-SubGraph.main-prod-stack" {
         graph [
-          label = "CdkPracticeTypescriptProdStack";
+          label = "main-prod-stack";
           labelloc = "b";
           labeljust = "l";
           margin = 10;
@@ -164,7 +164,7 @@ digraph "Diagram" {
           style = "filled,rounded";
           fillcolor = "#e4e4e4";
         ];
-        "CdkPracticeTypescriptProdStack/AccessLogsBucket" [
+        "main-prod-stack/AccessLogsBucket" [
           label = " AccessLogsBucket";
           fontsize = 12;
           image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
@@ -177,7 +177,7 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
-        "CdkPracticeTypescriptProdStack/MyFirstBucket" [
+        "main-prod-stack/MyFirstBucket" [
           label = " MyFirstBucket";
           fontsize = 12;
           image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
@@ -202,7 +202,7 @@ digraph "Diagram" {
             style = "filled,rounded";
             fillcolor = "#d6d6d6";
           ];
-          "CdkPracticeTypescriptProdStack/HelloService/Table" [
+          "main-prod-stack/HelloService/Table" [
             label = " Table";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Database\64\Arch_Amazon-DynamoDB_64@5x.png";
@@ -215,7 +215,7 @@ digraph "Diagram" {
             width = 1.2;
             height = 1.466;
           ];
-          "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" [
+          "main-prod-stack/HelloService/HelloFunction" [
             label = " HelloFunction";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Compute\64\Arch_AWS-Lambda_64@5x.png";
@@ -228,7 +228,7 @@ digraph "Diagram" {
             width = 2;
             height = 2.266;
           ];
-          "CdkPracticeTypescriptProdStack/HelloService/HelloApiAccessLogs" [
+          "main-prod-stack/HelloService/HelloApiAccessLogs" [
             label = " HelloApiAccessLogs";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
@@ -241,7 +241,7 @@ digraph "Diagram" {
             width = 2;
             height = 2.266;
           ];
-          "CdkPracticeTypescriptProdStack/HelloService/HelloApi" [
+          "main-prod-stack/HelloService/HelloApi" [
             label = " HelloApi";
             fontsize = 12;
             image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Networking-Content\64\Arch_Amazon-API-Gateway_64@5x.png";
@@ -258,34 +258,34 @@ digraph "Diagram" {
       }
     }
   }
-  "CdkPracticeTypescriptDevStack/AccessLogsBucket" -> "CdkPracticeTypescriptDevStack/MyFirstBucket" [
+  "main-dev-stack/AccessLogsBucket" -> "main-dev-stack/MyFirstBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptDevStack/MyFirstBucket" -> "CdkPracticeTypescriptDevStack/AccessLogsBucket" [
+  "main-dev-stack/MyFirstBucket" -> "main-dev-stack/AccessLogsBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptDevStack/HelloService/Table" [
+  "main-dev-stack/HelloService/HelloFunction" -> "main-dev-stack/HelloService/Table" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptDevStack/HelloService/HelloApi" -> "CdkPracticeTypescriptDevStack/HelloService/HelloApiAccessLogs" [
+  "main-dev-stack/HelloService/HelloApi" -> "main-dev-stack/HelloService/HelloApiAccessLogs" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptDevStack/HelloService/HelloApi" -> "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" [
+  "main-dev-stack/HelloService/HelloApi" -> "main-dev-stack/HelloService/HelloFunction" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptProdStack/AccessLogsBucket" -> "CdkPracticeTypescriptProdStack/MyFirstBucket" [
+  "main-prod-stack/AccessLogsBucket" -> "main-prod-stack/MyFirstBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptProdStack/MyFirstBucket" -> "CdkPracticeTypescriptProdStack/AccessLogsBucket" [
+  "main-prod-stack/MyFirstBucket" -> "main-prod-stack/AccessLogsBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptProdStack/HelloService/Table" [
+  "main-prod-stack/HelloService/HelloFunction" -> "main-prod-stack/HelloService/Table" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptProdStack/HelloService/HelloApi" -> "CdkPracticeTypescriptProdStack/HelloService/HelloApiAccessLogs" [
+  "main-prod-stack/HelloService/HelloApi" -> "main-prod-stack/HelloService/HelloApiAccessLogs" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptProdStack/HelloService/HelloApi" -> "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" [
+  "main-prod-stack/HelloService/HelloApi" -> "main-prod-stack/HelloService/HelloFunction" [
     dir = "both";
   ];
 }

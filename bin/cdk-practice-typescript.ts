@@ -7,36 +7,28 @@ import { MonitoringStack } from '../lib/monitoring-stack';
 
 const app = new cdk.App();
 
-const devStack = new CdkPracticeTypescriptStack(
-  app,
-  'CdkPracticeTypescriptDevStack',
-  {
-    stackName: 'cdk-practice-typescript-dev',
-    description: 'Dev CDK practice stack',
-    greeting: 'Hello from dev',
-    removalPolicy: cdk.RemovalPolicy.DESTROY,
-    tags: {
-      environment: 'dev',
-    },
+const devStack = new CdkPracticeTypescriptStack(app, 'main-dev-stack', {
+  stackName: 'main-dev-stack',
+  description: 'Dev CDK practice stack',
+  greeting: 'Hello from dev',
+  removalPolicy: cdk.RemovalPolicy.DESTROY,
+  tags: {
+    environment: 'dev',
   },
-);
+});
 
-const prodStack = new CdkPracticeTypescriptStack(
-  app,
-  'CdkPracticeTypescriptProdStack',
-  {
-    stackName: 'cdk-practice-typescript-prod',
-    description: 'Prod CDK practice stack',
-    greeting: 'Hello from prod',
-    removalPolicy: cdk.RemovalPolicy.RETAIN,
-    tags: {
-      environment: 'prod',
-    },
+const prodStack = new CdkPracticeTypescriptStack(app, 'main-prod-stack', {
+  stackName: 'main-prod-stack',
+  description: 'Prod CDK practice stack',
+  greeting: 'Hello from prod',
+  removalPolicy: cdk.RemovalPolicy.RETAIN,
+  tags: {
+    environment: 'prod',
   },
-);
+});
 
-new MonitoringStack(app, 'CdkPracticeTypescriptDevMonitoringStack', {
-  stackName: 'cdk-practice-typescript-dev-monitoring',
+new MonitoringStack(app, 'main-dev-monitoring', {
+  stackName: 'main-dev-monitoring',
   description: 'Dev monitoring stack',
   apiUrl: devStack.apiUrl,
   tags: {
@@ -44,8 +36,8 @@ new MonitoringStack(app, 'CdkPracticeTypescriptDevMonitoringStack', {
   },
 });
 
-new MonitoringStack(app, 'CdkPracticeTypescriptProdMonitoringStack', {
-  stackName: 'cdk-practice-typescript-prod-monitoring',
+new MonitoringStack(app, 'main-prod-monitoring', {
+  stackName: 'main-prod-monitoring',
   description: 'Prod monitoring stack',
   apiUrl: prodStack.apiUrl,
   tags: {
