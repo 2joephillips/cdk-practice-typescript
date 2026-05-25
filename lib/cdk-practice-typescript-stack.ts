@@ -10,6 +10,8 @@ export interface CdkPracticeTypescriptStackProps extends cdk.StackProps {
 }
 
 export class CdkPracticeTypescriptStack extends cdk.Stack {
+  public readonly apiUrl: string;
+
   constructor(
     scope: Construct,
     id: string,
@@ -21,6 +23,7 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
       props?.greeting ??
       this.node.tryGetContext('greeting') ??
       'Hello, CDK with TypeScript!';
+
     const removalPolicy =
       props?.removalPolicy ??
       this.node.tryGetContext('removalPolicy') ??
@@ -53,8 +56,10 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
       removalPolicy,
     });
 
+    this.apiUrl = service.url;
+
     new cdk.CfnOutput(this, 'ApiUrl', {
-      value: service.url,
+      value: this.apiUrl,
     });
   }
 }
