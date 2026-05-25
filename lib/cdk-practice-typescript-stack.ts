@@ -4,12 +4,17 @@ import { NagSuppressions } from 'cdk-nag';
 import { Construct } from 'constructs';
 import { HelloService } from './hello-service';
 
-export class CdkPracticeTypescriptStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+export interface CdkPracticeTypescriptStackProps extends cdk.StackProps {
+  greeting: string;
+}
 
-    const greeting =
-      this.node.tryGetContext('greeting') ?? 'Hello from default context';
+export class CdkPracticeTypescriptStack extends cdk.Stack {
+  constructor(
+    scope: Construct,
+    id: string,
+    props?: CdkPracticeTypescriptStackProps,
+  ) {
+    super(scope, id, props);
 
     const accessLogsBucket = new s3.Bucket(this, 'AccessLogsBucket', {
       enforceSSL: true,
@@ -28,12 +33,13 @@ export class CdkPracticeTypescriptStack extends cdk.Stack {
     NagSuppressions.addResourceSuppressions(accessLogsBucket, [
       {
         id: 'AwsSolutions-S1',
-        reason: 'This bucket stores S3 server access logs for the demo bucket. Logging the log bucket to itself is intentionally avoided.',
+        reason:
+          'This bucket stores S3 server access logs for the demo bucket. Logging the log bucket to itself is intentionally avoided.',
       },
     ]);
 
     const service = new HelloService(this, 'HelloService', {
-      greeting: greeting,
+      greeting: props?.greeting ?? 'Hello, CDK with TypeScript!',
     });
 
     new cdk.CfnOutput(this, 'ApiUrl', {

@@ -27,10 +27,10 @@ digraph "Diagram" {
     fontsize = 8;
     margin = 8;
   ];
-  subgraph "CdkPracticeTypescriptStack" {
-    subgraph "cluster-SubGraph.CdkPracticeTypescriptStack" {
+  subgraph "App" {
+    subgraph "cluster-SubGraph.App" {
       graph [
-        label = "CdkPracticeTypescriptStack";
+        label = "App";
         labelloc = "b";
         labeljust = "l";
         margin = 10;
@@ -38,37 +38,11 @@ digraph "Diagram" {
         penwidth = 2;
         pencolor = "#888888";
         style = "filled,rounded";
-        fillcolor = "#e4e4e4";
+        fillcolor = "#f3f3f3";
       ];
-      "CdkPracticeTypescriptStack/AccessLogsBucket" [
-        label = " AccessLogsBucket";
-        fontsize = 12;
-        image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
-        imagescale = "true";
-        imagepos = "tc";
-        penwidth = 0;
-        shape = "node";
-        fixedsize = "true";
-        labelloc = "b";
-        width = 2;
-        height = 2.266;
-      ];
-      "CdkPracticeTypescriptStack/MyFirstBucket" [
-        label = " MyFirstBucket";
-        fontsize = 12;
-        image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
-        imagescale = "true";
-        imagepos = "tc";
-        penwidth = 0;
-        shape = "node";
-        fixedsize = "true";
-        labelloc = "b";
-        width = 2;
-        height = 2.266;
-      ];
-      subgraph "cluster-SubGraph.HelloService" {
+      subgraph "cluster-SubGraph.CdkPracticeTypescriptDevStack" {
         graph [
-          label = "HelloService";
+          label = "CdkPracticeTypescriptDevStack";
           labelloc = "b";
           labeljust = "l";
           margin = 10;
@@ -76,25 +50,12 @@ digraph "Diagram" {
           penwidth = 2;
           pencolor = "#888888";
           style = "filled,rounded";
-          fillcolor = "#d6d6d6";
+          fillcolor = "#e4e4e4";
         ];
-        "CdkPracticeTypescriptStack/HelloService/Table" [
-          label = " Table";
+        "CdkPracticeTypescriptDevStack/AccessLogsBucket" [
+          label = " AccessLogsBucket";
           fontsize = 12;
-          image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Database\64\Arch_Amazon-DynamoDB_64@5x.png";
-          imagescale = "true";
-          imagepos = "tc";
-          penwidth = 0;
-          shape = "node";
-          fixedsize = "true";
-          labelloc = "b";
-          width = 1.2;
-          height = 1.466;
-        ];
-        "CdkPracticeTypescriptStack/HelloService/HelloFunction" [
-          label = " HelloFunction";
-          fontsize = 12;
-          image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Compute\64\Arch_AWS-Lambda_64@5x.png";
+          image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -104,10 +65,10 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
-        "CdkPracticeTypescriptStack/HelloService/HelloApiAccessLogs" [
-          label = " HelloApiAccessLogs";
+        "CdkPracticeTypescriptDevStack/MyFirstBucket" [
+          label = " MyFirstBucket";
           fontsize = 12;
-          image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+          image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -117,35 +78,206 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
-        "CdkPracticeTypescriptStack/HelloService/HelloApi" [
-          label = " HelloApi";
+        subgraph "cluster-SubGraph.HelloService" {
+          graph [
+            label = "HelloService";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "CdkPracticeTypescriptDevStack/HelloService/Table" [
+            label = " Table";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Database\64\Arch_Amazon-DynamoDB_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" [
+            label = " HelloFunction";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Compute\64\Arch_AWS-Lambda_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "CdkPracticeTypescriptDevStack/HelloService/HelloApiAccessLogs" [
+            label = " HelloApiAccessLogs";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "CdkPracticeTypescriptDevStack/HelloService/HelloApi" [
+            label = " HelloApi";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Networking-Content\64\Arch_Amazon-API-Gateway_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.CdkPracticeTypescriptProdStack" {
+        graph [
+          label = "CdkPracticeTypescriptProdStack";
+          labelloc = "b";
+          labeljust = "l";
+          margin = 10;
+          fontsize = 16;
+          penwidth = 2;
+          pencolor = "#888888";
+          style = "filled,rounded";
+          fillcolor = "#e4e4e4";
+        ];
+        "CdkPracticeTypescriptProdStack/AccessLogsBucket" [
+          label = " AccessLogsBucket";
           fontsize = 12;
-          image = "C:\Users\Josep\AppData\Local\npm-cache\_npx\b98735c91b702b55\node_modules\cdk-dia\icons\aws\Service\Arch_Networking-Content\64\Arch_Amazon-API-Gateway_64@5x.png";
+          image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
           shape = "node";
           fixedsize = "true";
           labelloc = "b";
-          width = 1.2;
-          height = 1.466;
+          width = 2;
+          height = 2.266;
         ];
+        "CdkPracticeTypescriptProdStack/MyFirstBucket" [
+          label = " MyFirstBucket";
+          fontsize = 12;
+          image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Storage\64\Arch_Amazon-S3-Standard_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+        subgraph "cluster-SubGraph.HelloService" {
+          graph [
+            label = "HelloService";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "CdkPracticeTypescriptProdStack/HelloService/Table" [
+            label = " Table";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Database\64\Arch_Amazon-DynamoDB_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" [
+            label = " HelloFunction";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Compute\64\Arch_AWS-Lambda_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "CdkPracticeTypescriptProdStack/HelloService/HelloApiAccessLogs" [
+            label = " HelloApiAccessLogs";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Resource\Res_Management-Governance\Res_48_Dark\Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "CdkPracticeTypescriptProdStack/HelloService/HelloApi" [
+            label = " HelloApi";
+            fontsize = 12;
+            image = "C:\Users\Josep\source\cdk-practice-typescript\node_modules\cdk-dia\icons\aws\Service\Arch_Networking-Content\64\Arch_Amazon-API-Gateway_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
       }
     }
   }
-  "CdkPracticeTypescriptStack/AccessLogsBucket" -> "CdkPracticeTypescriptStack/MyFirstBucket" [
+  "CdkPracticeTypescriptDevStack/AccessLogsBucket" -> "CdkPracticeTypescriptDevStack/MyFirstBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptStack/MyFirstBucket" -> "CdkPracticeTypescriptStack/AccessLogsBucket" [
+  "CdkPracticeTypescriptDevStack/MyFirstBucket" -> "CdkPracticeTypescriptDevStack/AccessLogsBucket" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptStack/HelloService/Table" [
+  "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptDevStack/HelloService/Table" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptStack/HelloService/HelloApi" -> "CdkPracticeTypescriptStack/HelloService/HelloApiAccessLogs" [
+  "CdkPracticeTypescriptDevStack/HelloService/HelloApi" -> "CdkPracticeTypescriptDevStack/HelloService/HelloApiAccessLogs" [
     dir = "both";
   ];
-  "CdkPracticeTypescriptStack/HelloService/HelloApi" -> "CdkPracticeTypescriptStack/HelloService/HelloFunction" [
+  "CdkPracticeTypescriptDevStack/HelloService/HelloApi" -> "CdkPracticeTypescriptDevStack/HelloService/HelloFunction" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptProdStack/AccessLogsBucket" -> "CdkPracticeTypescriptProdStack/MyFirstBucket" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptProdStack/MyFirstBucket" -> "CdkPracticeTypescriptProdStack/AccessLogsBucket" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" -> "CdkPracticeTypescriptProdStack/HelloService/Table" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptProdStack/HelloService/HelloApi" -> "CdkPracticeTypescriptProdStack/HelloService/HelloApiAccessLogs" [
+    dir = "both";
+  ];
+  "CdkPracticeTypescriptProdStack/HelloService/HelloApi" -> "CdkPracticeTypescriptProdStack/HelloService/HelloFunction" [
     dir = "both";
   ];
 }
