@@ -5,7 +5,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "diagram": "cdk-dia",
+    "diagram:check": "where dot && cdk-dia"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
