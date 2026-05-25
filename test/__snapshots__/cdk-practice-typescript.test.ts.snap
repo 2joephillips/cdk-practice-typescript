@@ -1,0 +1,563 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Matches snapshot 1`] = `
+{
+  "Outputs": {
+    "ApiUrl": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "HelloServiceHelloApi738C57B6",
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            {
+              "Ref": "HelloServiceHelloApiDeploymentStageprod23C2B854",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+    "HelloServiceHelloApiEndpointD9CCEBCE": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "HelloServiceHelloApi738C57B6",
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            {
+              "Ref": "HelloServiceHelloApiDeploymentStageprod23C2B854",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "HelloServiceHelloApi738C57B6": {
+      "Properties": {
+        "Name": "HelloApi",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "HelloServiceHelloApiANYApiPermissionTestStackHelloServiceHelloApi02DE76ECANYABD9647D": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloFunctionC31FF2E5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "HelloServiceHelloApi738C57B6",
+              },
+              "/",
+              {
+                "Ref": "HelloServiceHelloApiDeploymentStageprod23C2B854",
+              },
+              "/*/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloServiceHelloApiANYApiPermissionTestTestStackHelloServiceHelloApi02DE76ECANY6BB0A761": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloFunctionC31FF2E5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "HelloServiceHelloApi738C57B6",
+              },
+              "/test-invoke-stage/*/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloServiceHelloApiANYC69F1FCE": {
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "ANY",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "HelloServiceHelloFunctionC31FF2E5",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloApi738C57B6",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": {
+          "Ref": "HelloServiceHelloApi738C57B6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "HelloServiceHelloApiAccount294BB15C": {
+      "DeletionPolicy": "Retain",
+      "DependsOn": [
+        "HelloServiceHelloApi738C57B6",
+      ],
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloApiCloudWatchRole1558F347",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "HelloServiceHelloApiCloudWatchRole1558F347": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "HelloServiceHelloApiDeployment7D66E1AE0314f499710f3739b3378db2b50b8338": {
+      "DependsOn": [
+        "HelloServiceHelloApiproxyANY4BB6F1A5",
+        "HelloServiceHelloApiproxy0DE64C09",
+        "HelloServiceHelloApiANYC69F1FCE",
+      ],
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
+      "Properties": {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": {
+          "Ref": "HelloServiceHelloApi738C57B6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "HelloServiceHelloApiDeploymentStageprod23C2B854": {
+      "DependsOn": [
+        "HelloServiceHelloApiAccount294BB15C",
+      ],
+      "Properties": {
+        "DeploymentId": {
+          "Ref": "HelloServiceHelloApiDeployment7D66E1AE0314f499710f3739b3378db2b50b8338",
+        },
+        "RestApiId": {
+          "Ref": "HelloServiceHelloApi738C57B6",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "HelloServiceHelloApiproxy0DE64C09": {
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloApi738C57B6",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "HelloServiceHelloApi738C57B6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "HelloServiceHelloApiproxyANY4BB6F1A5": {
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "ANY",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "HelloServiceHelloFunctionC31FF2E5",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Ref": "HelloServiceHelloApiproxy0DE64C09",
+        },
+        "RestApiId": {
+          "Ref": "HelloServiceHelloApi738C57B6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "HelloServiceHelloApiproxyANYApiPermissionTestStackHelloServiceHelloApi02DE76ECANYproxy5103465D": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloFunctionC31FF2E5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "HelloServiceHelloApi738C57B6",
+              },
+              "/",
+              {
+                "Ref": "HelloServiceHelloApiDeploymentStageprod23C2B854",
+              },
+              "/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloServiceHelloApiproxyANYApiPermissionTestTestStackHelloServiceHelloApi02DE76ECANYproxy3D867623": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloFunctionC31FF2E5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "HelloServiceHelloApi738C57B6",
+              },
+              "/test-invoke-stage/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloServiceHelloFunctionC31FF2E5": {
+      "DependsOn": [
+        "HelloServiceHelloFunctionServiceRoleDefaultPolicy20199EA4",
+        "HelloServiceHelloFunctionServiceRoleFE6E87B4",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "7093c92654444dd3905ecea2a21ca514abe83084919fd8f3bd95b0ab2c467f56.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "GREETING": "Hello from test",
+            "TABLE_NAME": {
+              "Ref": "HelloServiceTableACBE3772",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "HelloServiceHelloFunctionServiceRoleFE6E87B4",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs20.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloServiceHelloFunctionServiceRoleDefaultPolicy20199EA4": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "HelloServiceTableACBE3772",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "HelloServiceHelloFunctionServiceRoleDefaultPolicy20199EA4",
+        "Roles": [
+          {
+            "Ref": "HelloServiceHelloFunctionServiceRoleFE6E87B4",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "HelloServiceHelloFunctionServiceRoleFE6E87B4": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "HelloServiceTableACBE3772": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH",
+          },
+        ],
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "MyFirstBucketB8884501": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VersioningConfiguration": {
+          "Status": "Enabled",
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

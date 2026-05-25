@@ -33,3 +33,15 @@ test('Lambda has greeting environment variable', () => {
     },
   });
 });
+
+test('Matches snapshot', () => {
+  const app = new cdk.App({
+    context: {
+      greeting: 'Hello from test',
+    },
+  });
+
+  const stack = new CdkPracticeTypescriptStack(app, 'TestStack');
+  const template = Template.fromStack(stack);
+  expect(template.toJSON()).toMatchSnapshot();
+});
