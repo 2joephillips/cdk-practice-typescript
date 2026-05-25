@@ -4,7 +4,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "npm run build && jest",
+    "snapshot:update": "npm run test -- -u",
     "cdk": "cdk",
     "diagram": "npx cdk-dia",
     "diagram:check": "where dot && npx cdk-dia"
